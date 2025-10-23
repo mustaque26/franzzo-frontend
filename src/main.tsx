@@ -5,6 +5,7 @@ import App from './pages/App'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Menu from './pages/Menu'
+import MenuBiryani from './pages/MenuBiryani'
 import Contact from './pages/Contact'
 import About from './pages/About'
 import Gallery from './pages/Gallery'
@@ -61,6 +62,7 @@ createRoot(document.getElementById('root')!).render(
 
         {/* Public informational pages */}
         <Route path="/menu" element={<Menu />} />
+        <Route path="/menu/biryani" element={<MenuBiryani />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<About />} />
         <Route path="/gallery" element={<Gallery />} />

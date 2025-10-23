@@ -540,3 +540,15 @@ body {
   .contact-hero { flex-direction: column; align-items: flex-start; gap: 8px; }
   .contact-actions { width: 100%; text-align: left; }
 }
+
+/* Toggle button: rotate contained SVG when open for a smooth arrow animation */
+.menu-toggle svg {
+  transition: transform 260ms cubic-bezier(.2,.9,.2,1);
+  color: #222; /* color for arrow on light button */
+  transform: rotate(0deg);
+  transform-origin: center center;
+  display: block; /* prevent baseline transforms from looking off-center */
+}
+.menu-toggle.open svg {
+  transform: rotate(90deg); /* right -> down */
+}

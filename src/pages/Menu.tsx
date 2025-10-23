@@ -1,15 +1,118 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Brand from '../components/Brand'
 
-const SAMPLE_MENU = [
-  { id: 1, name: 'Margherita Pizza', description: 'San Marzano tomato, fresh basil, buffalo mozzarella', price: '$12' },
-  { id: 2, name: 'Spicy Arrabbiata Pasta', description: 'Penne tossed in a spicy tomato-garlic sauce', price: '$11' },
-  { id: 3, name: 'Caesar Salad', description: 'Crisp romaine, shaved parmesan, house dressing', price: '$9' },
-  { id: 4, name: 'Chocolate Lava Cake', description: 'Warm chocolate cake with molten center', price: '$7' },
+const STARTERS_MENU = [
+  { id: 1, name: 'Al Faham (Q/H/F)', price: '119/229/449' },
+  { id: 2, name: 'Ch. Tikka (6)', price: '149' },
+  { id: 3, name: 'Ch. Lollypop (H4/F6)', price: '109/149' },
+  { id: 4, name: 'Ch. Wings (6)', price: '149' },
+  { id: 5, name: 'Ch. Drumstick (H2/F4)', price: '129/249' },
+  { id: 6, name: 'Ch. Chaap (H1/F2)', price: '149/249' },
+  { id: 7, name: 'Ch. Seek Kabab', price: '99' },
+  { id: 8, name: 'Paneer Tikka (6)', price: '149' },
+  { id: 9, name: 'Fish Fry (2)', price: '119' },
+  { id: 10, name: 'Ch. Tikka Small (3)', price: '80' },
+]
+
+const BIRYANI_MENU = [
+  { id: 1, name: 'Veg Dum Biryani', price: '80/120' },
+  { id: 2, name: 'Ch. Dum Biryani', price: '99/130' },
+  { id: 3, name: 'Ch. Tandoor Biryani', price: '109/140' },
+  { id: 4, name: 'Ch. Hyderabadi Biryani', price: '109/140' },
+  { id: 5, name: 'Maska Biryani', price: '109/140' },
+]
+
+const MAIN_MENU = [
+  { id: 1, name: 'Chicken Sukkha (6)', price: '239' },
+  { id: 2, name: 'Chicken Handi. (3/6)', price: '159/239' },
+  { id: 3, name: 'Chicken Masala (3/6)', price: '149/229' },
+  { id: 4, name: 'Chicken Korma (3/6)', price: '159/239' },
+  { id: 5, name: 'Paneer Masala (8/16)', price: '159/239' },
+  { id: 6, name: 'Paneer Handi. (8/16)', price: '149/229' },
+  { id: 7, name: 'Mix Veg', price: '159' },
+  { id: 8, name: 'Fish Curry (2)', price: '149' },
+  { id: 9, name: 'Dal Tadka', price: '120' },
 ]
 
 export default function Menu() {
+  const [openStarters, setOpenStarters] = useState(false)
+  const [openBiryani, setOpenBiryani] = useState(true)
+  const [openMain, setOpenMain] = useState(false)
+
+  // Read URL hash on mount to open a specific section (e.g., #starters)
+  useEffect(() => {
+    const hash = (window.location.hash || '').replace('#', '')
+    if (hash === 'starters') openOnly('starters')
+    else if (hash === 'biryani') openOnly('biryani')
+    else if (hash === 'main') openOnly('main')
+  }, [])
+
+  // update URL hash without adding history entries
+  function updateHash(name: string | null) {
+    const base = window.location.pathname + window.location.search
+    const newUrl = name ? `${base}#${name}` : base
+    try { window.history.replaceState(null, '', newUrl) } catch { window.location.hash = name || '' }
+  }
+
+  function openOnly(section: 'starters' | 'biryani' | 'main' | null) {
+    setOpenStarters(section === 'starters')
+    setOpenBiryani(section === 'biryani')
+    setOpenMain(section === 'main')
+    updateHash(section)
+  }
+
+  const SectionHeader = ({ title, open, onToggle }: { title: string; open: boolean; onToggle: () => void }) => (
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
+      <div style={{
+        flex: 1,
+        textAlign: 'center',
+        background: 'linear-gradient(90deg, #6b8bff, #f26aa7)',
+        color: '#fff',
+        fontWeight: 800,
+        fontSize: 26,
+        padding: '10px 14px',
+        borderRadius: 12
+      }}>{title}</div>
+
+      <button
+        onClick={onToggle}
+        aria-expanded={open}
+        aria-label={open ? `${title} collapse` : `${title} expand`}
+        className={`menu-toggle ${open ? 'open' : ''}`}
+        style={{
+          marginLeft: 12,
+          width: 44,
+          height: 44,
+          borderRadius: 10,
+          border: 'none',
+          background: 'rgba(255,255,255,0.06)',
+          cursor: 'pointer',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}
+        title={open ? 'Collapse' : 'Expand'}
+      >
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden
+          style={{
+            transform: open ? 'rotate(90deg)' : 'rotate(0deg)',
+            transition: 'transform 260ms cubic-bezier(.2,.9,.2,1)',
+            display: 'block'
+          }}
+        >
+          <path d="M9 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </button>
+    </div>
+  )
+
   return (
     <div style={{ paddingTop: 24 }}>
       <header className="header" style={{ maxWidth: 1100, margin: '0 auto 16px' }}>
@@ -17,24 +120,62 @@ export default function Menu() {
       </header>
 
       <main style={{ display: 'flex', justifyContent: 'center' }}>
-        <div className="card" style={{ width: 'min(1100px, 96vw)' }}>
-          <h1 style={{ marginTop: 0 }}>Menu</h1>
-          <p style={{ marginTop: 4, color: 'rgba(230,240,255,0.85)' }}>Explore some sample dishes — replace these with your real menu items.</p>
+        <div className="card menu-hero" style={{ width: 'min(1100px, 96vw)', color: '#fff' }}>
+          <div style={{ position: 'relative', zIndex: 2, padding: 24 }}>
+            <h1 style={{ marginTop: 0 }}>Menu</h1>
+            <p style={{ marginTop: 4, color: 'rgba(255,255,255,0.9)' }}>Click the arrow to expand or collapse a category. The open section is preserved in the URL hash.</p>
 
-          <div style={{ display: 'grid', gap: 12, marginTop: 12 }}>
-            {SAMPLE_MENU.map(item => (
-              <div key={item.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 12, borderRadius: 8, background: 'rgba(255,255,255,0.02)' }}>
-                <div>
-                  <div style={{ fontWeight: 700, fontSize: 16 }}>{item.name}</div>
-                  <div style={{ color: 'rgba(230,240,255,0.75)', fontSize: 14 }}>{item.description}</div>
+            {/* Starters section (top) */}
+            <div style={{ marginTop: 12 }}>
+              <SectionHeader title="Starters" open={openStarters} onToggle={() => openOnly(openStarters ? null : 'starters')} />
+
+              <div className={`collapsible ${openStarters ? 'open' : ''}`}>
+                <div style={{ display: 'grid', gap: 12, marginTop: 6 }}>
+                  {STARTERS_MENU.map(item => (
+                    <div key={item.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 6px' }}>
+                      <div style={{ fontWeight: 700, fontSize: 20 }}>{item.name}</div>
+                      <div style={{ fontWeight: 700, fontSize: 20 }}>{item.price}</div>
+                    </div>
+                  ))}
                 </div>
-                <div style={{ fontWeight: 700 }}>{item.price}</div>
               </div>
-            ))}
-          </div>
+            </div>
 
-          <div style={{ marginTop: 16 }}>
-            <Link to="/" className="link-plain">Back to home</Link>
+            {/* Biryani section (middle) */}
+            <div style={{ marginTop: 18 }}>
+              <SectionHeader title="Biryani" open={openBiryani} onToggle={() => openOnly(openBiryani ? null : 'biryani')} />
+
+              <div className={`collapsible ${openBiryani ? 'open' : ''}`}>
+                <div style={{ display: 'grid', gap: 12, marginTop: 6 }}>
+                  {BIRYANI_MENU.map(item => (
+                    <div key={item.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 6px' }}>
+                      <div style={{ fontWeight: 700, fontSize: 20 }}>{item.name}</div>
+                      <div style={{ fontWeight: 700, fontSize: 20 }}>{item.price}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Main Course section (bottom) */}
+            <div style={{ marginTop: 18 }}>
+              <SectionHeader title="Main Course" open={openMain} onToggle={() => openOnly(openMain ? null : 'main')} />
+
+              <div className={`collapsible ${openMain ? 'open' : ''}`}>
+                <div style={{ display: 'grid', gap: 12, marginTop: 6 }}>
+                  {MAIN_MENU.map(item => (
+                    <div key={item.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 6px' }}>
+                      <div style={{ fontWeight: 700, fontSize: 20 }}>{item.name}</div>
+                      <div style={{ fontWeight: 700, fontSize: 20 }}>{item.price}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div style={{ marginTop: 16 }}>
+              <Link to="/" className="link-plain" style={{ color: 'rgba(255,255,255,0.95)' }}>Back to home</Link>
+            </div>
           </div>
         </div>
       </main>
