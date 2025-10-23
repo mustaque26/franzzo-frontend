@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Brand from '../components/Brand'
+import RollsSection from './RollsSection'
+import BreakfastSection from './BreakfastSection'
+import BeveragesSection from './BeveragesSection'
 
 const STARTERS_MENU = [
   { id: 1, name: 'Al Faham (Q/H/F)', price: '119/229/449' },
@@ -39,6 +42,9 @@ export default function Menu() {
   const [openStarters, setOpenStarters] = useState(false)
   const [openBiryani, setOpenBiryani] = useState(true)
   const [openMain, setOpenMain] = useState(false)
+  const [openRolls, setOpenRolls] = useState(false)
+  const [openBreakfast, setOpenBreakfast] = useState(false)
+  const [openBeverages, setOpenBeverages] = useState(false)
 
   // Read URL hash on mount to open a specific section (e.g., #starters)
   useEffect(() => {
@@ -46,6 +52,9 @@ export default function Menu() {
     if (hash === 'starters') openOnly('starters')
     else if (hash === 'biryani') openOnly('biryani')
     else if (hash === 'main') openOnly('main')
+    else if (hash === 'rolls') openOnly('rolls')
+    else if (hash === 'breakfast') openOnly('breakfast')
+    else if (hash === 'beverages') openOnly('beverages')
   }, [])
 
   // update URL hash without adding history entries
@@ -55,11 +64,13 @@ export default function Menu() {
     try { window.history.replaceState(null, '', newUrl) } catch { window.location.hash = name || '' }
   }
 
-  function openOnly(section: 'starters' | 'biryani' | 'main' | null) {
-    console.log('[Menu] openOnly called with:', section)
+  function openOnly(section: 'starters' | 'biryani' | 'main' | 'rolls' | 'breakfast' | 'beverages' | null) {
     setOpenStarters(section === 'starters')
     setOpenBiryani(section === 'biryani')
     setOpenMain(section === 'main')
+    setOpenRolls(section === 'rolls')
+    setOpenBreakfast(section === 'breakfast')
+    setOpenBeverages(section === 'beverages')
     updateHash(section)
   }
 
@@ -136,6 +147,24 @@ export default function Menu() {
             <h1 style={{ marginTop: 0 }}>Menu</h1>
             <p style={{ marginTop: 4, color: 'rgba(255,255,255,0.9)' }}>Click the arrow to expand or collapse a category. The open section is preserved in the URL hash.</p>
 
+            {/* Rolls section (moved to its own file) */}
+            <div style={{ marginTop: 12 }}>
+              <SectionHeader title="Rolls" open={openRolls} onToggle={() => openOnly(openRolls ? null : 'rolls')} />
+
+              <div id="collapsible-rolls" className={`collapsible ${openRolls ? 'open' : ''}`}>
+                <RollsSection />
+              </div>
+            </div>
+
+            {/* Breakfast section (moved to its own file) */}
+            <div style={{ marginTop: 12 }}>
+              <SectionHeader title="Breakfast" open={openBreakfast} onToggle={() => openOnly(openBreakfast ? null : 'breakfast')} />
+
+              <div id="collapsible-breakfast" className={`collapsible ${openBreakfast ? 'open' : ''}`}>
+                <BreakfastSection />
+              </div>
+            </div>
+
             {/* Starters section (top) */}
             <div style={{ marginTop: 12 }}>
               <SectionHeader title="Starters" open={openStarters} onToggle={() => openOnly(openStarters ? null : 'starters')} />
@@ -165,6 +194,15 @@ export default function Menu() {
                     </div>
                   ))}
                 </div>
+              </div>
+            </div>
+
+            {/* Beverages section (new file) */}
+            <div style={{ marginTop: 18 }}>
+              <SectionHeader title="Beverages" open={openBeverages} onToggle={() => openOnly(openBeverages ? null : 'beverages')} />
+
+              <div id="collapsible-beverages" className={`collapsible ${openBeverages ? 'open' : ''}`}>
+                <BeveragesSection />
               </div>
             </div>
 
