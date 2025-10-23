@@ -56,62 +56,74 @@ export default function Menu() {
   }
 
   function openOnly(section: 'starters' | 'biryani' | 'main' | null) {
+    console.log('[Menu] openOnly called with:', section)
     setOpenStarters(section === 'starters')
     setOpenBiryani(section === 'biryani')
     setOpenMain(section === 'main')
     updateHash(section)
   }
 
-  const SectionHeader = ({ title, open, onToggle }: { title: string; open: boolean; onToggle: () => void }) => (
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
-      <div style={{
-        flex: 1,
-        textAlign: 'center',
-        background: 'linear-gradient(90deg, #6b8bff, #f26aa7)',
-        color: '#fff',
-        fontWeight: 800,
-        fontSize: 26,
-        padding: '10px 14px',
-        borderRadius: 12
-      }}>{title}</div>
+  const SectionHeader = ({ title, open, onToggle }: { title: string; open: boolean; onToggle: () => void }) => {
+    const id = `collapsible-${title.replace(/\s+/g, '-').toLowerCase()}`
+    return (
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
+        <div style={{
+          flex: 1,
+          textAlign: 'center',
+          background: 'linear-gradient(90deg, #6b8bff, #f26aa7)',
+          color: '#fff',
+          fontWeight: 800,
+          fontSize: 26,
+          padding: '10px 14px',
+          borderRadius: 12
+        }}>{title}</div>
 
-      <button
-        onClick={onToggle}
-        aria-expanded={open}
-        aria-label={open ? `${title} collapse` : `${title} expand`}
-        className={`menu-toggle ${open ? 'open' : ''}`}
-        style={{
-          marginLeft: 12,
-          width: 44,
-          height: 44,
-          borderRadius: 10,
-          border: 'none',
-          background: 'rgba(255,255,255,0.06)',
-          cursor: 'pointer',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center'
-        }}
-        title={open ? 'Collapse' : 'Expand'}
-      >
-        <svg
-          width="18"
-          height="18"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          aria-hidden
+        <button
+          type="button"
+          onClick={() => onToggle()}
+          onPointerDown={(e) => { e.stopPropagation(); onToggle(); }}
+          aria-expanded={open}
+          aria-controls={id}
+          aria-label={open ? `${title} collapse` : `${title} expand`}
+          className={`menu-toggle ${open ? 'open' : ''}`}
           style={{
-            transform: open ? 'rotate(90deg)' : 'rotate(0deg)',
-            transition: 'transform 260ms cubic-bezier(.2,.9,.2,1)',
-            display: 'block'
+            marginLeft: 12,
+            width: 44,
+            height: 44,
+            borderRadius: 10,
+            border: 'none',
+            background: 'rgba(255,255,255,0.06)',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            touchAction: 'manipulation'
           }}
+          title={open ? 'Collapse' : 'Expand'}
         >
-          <path d="M9 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      </button>
-    </div>
-  )
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden
+            onClick={(e) => { e.stopPropagation(); onToggle() }}
+            onPointerDown={(e) => { e.stopPropagation(); onToggle() }}
+            style={{
+              transform: open ? 'rotate(90deg)' : 'rotate(0deg)',
+              transition: 'transform 260ms cubic-bezier(.2,.9,.2,1)',
+              display: 'block',
+              cursor: 'pointer',
+              touchAction: 'manipulation'
+            }}
+          >
+            <path d="M9 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
+      </div>
+    )
+  }
 
   return (
     <div style={{ paddingTop: 24 }}>
@@ -129,7 +141,7 @@ export default function Menu() {
             <div style={{ marginTop: 12 }}>
               <SectionHeader title="Starters" open={openStarters} onToggle={() => openOnly(openStarters ? null : 'starters')} />
 
-              <div className={`collapsible ${openStarters ? 'open' : ''}`}>
+              <div id="collapsible-starters" className={`collapsible ${openStarters ? 'open' : ''}`}>
                 <div style={{ display: 'grid', gap: 12, marginTop: 6 }}>
                   {STARTERS_MENU.map(item => (
                     <div key={item.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 6px' }}>
@@ -145,7 +157,7 @@ export default function Menu() {
             <div style={{ marginTop: 18 }}>
               <SectionHeader title="Biryani" open={openBiryani} onToggle={() => openOnly(openBiryani ? null : 'biryani')} />
 
-              <div className={`collapsible ${openBiryani ? 'open' : ''}`}>
+              <div id="collapsible-biryani" className={`collapsible ${openBiryani ? 'open' : ''}`}>
                 <div style={{ display: 'grid', gap: 12, marginTop: 6 }}>
                   {BIRYANI_MENU.map(item => (
                     <div key={item.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 6px' }}>
@@ -161,7 +173,7 @@ export default function Menu() {
             <div style={{ marginTop: 18 }}>
               <SectionHeader title="Main Course" open={openMain} onToggle={() => openOnly(openMain ? null : 'main')} />
 
-              <div className={`collapsible ${openMain ? 'open' : ''}`}>
+              <div id="collapsible-main-course" className={`collapsible ${openMain ? 'open' : ''}`}>
                 <div style={{ display: 'grid', gap: 12, marginTop: 6 }}>
                   {MAIN_MENU.map(item => (
                     <div key={item.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 6px' }}>

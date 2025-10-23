@@ -544,11 +544,81 @@ body {
 /* Toggle button: rotate contained SVG when open for a smooth arrow animation */
 .menu-toggle svg {
   transition: transform 260ms cubic-bezier(.2,.9,.2,1);
-  color: #222; /* color for arrow on light button */
+  color: #fff; /* use white for contrast */
   transform: rotate(0deg);
   transform-origin: center center;
   display: block; /* prevent baseline transforms from looking off-center */
 }
 .menu-toggle.open svg {
   transform: rotate(90deg); /* right -> down */
+}
+
+/* NEW: specific styles for menu-hero card (background image, etc) */
+.card.menu-hero {
+  position: relative;
+  overflow: hidden;
+}
+.card.menu-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('/assets/photo1.png');
+  background-size: cover;
+  background-position: center;
+  opacity: 1;
+  z-index: 0;
+  filter: saturate(0.95) brightness(0.6);
+  pointer-events: none; /* don't block clicks */
+}
+.card.menu-hero .hero-title, .card.menu-hero .hero-sub {
+  position: relative;
+  z-index: 1;
+}
+
+/* Collapsible containers: hidden by default, expand when .open is present */
+.collapsible {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: max-height 320ms cubic-bezier(.2,.9,.2,1), opacity 220ms ease, transform 220ms ease;
+}
+.collapsible.open {
+  max-height: 2000px; /* large enough for content */
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Ensure collapsible children flow naturally (block-level) */
+.collapsible > div { display: block; }
+
+/* About page: paragraph and team styles */
+.about-paragraph {
+  color: rgba(230,240,255,0.9);
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 12px 0;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 8px;
+}
+.team-member {
+  background: rgba(255,255,255,0.02);
+  padding: 12px 14px;
+  border-radius: 10px;
+  min-width: 160px;
+  box-shadow: 0 8px 20px rgba(2,6,23,0.45);
+}
+.team-member div { line-height: 1.2; }
+
+@media (max-width: 900px) {
+  .team-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 520px) {
+  .team-grid { grid-template-columns: 1fr; }
+  .about-paragraph { font-size: 15px; }
 }

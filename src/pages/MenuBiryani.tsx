@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Brand from '../components/Brand'
 
@@ -11,6 +11,15 @@ const BIRYANI_MENU = [
 ]
 
 export default function MenuBiryani() {
+  // Redirect to combined Menu page with hash so biryani section opens
+  useEffect(() => {
+    try {
+      window.location.href = '/menu#biryani'
+    } catch (e) {
+      // fallback: do nothing
+    }
+  }, [])
+
   return (
     <div style={{ paddingTop: 24 }}>
       <header className="header" style={{ maxWidth: 1100, margin: '0 auto 16px' }}>
@@ -20,18 +29,7 @@ export default function MenuBiryani() {
       <main style={{ display: 'flex', justifyContent: 'center' }}>
         <div className="card" style={{ width: 'min(1100px, 96vw)' }}>
           <h1 style={{ marginTop: 0 }}>Biryani</h1>
-          <p style={{ marginTop: 4, color: 'rgba(0,0,0,0.65)' }}>Our popular biryani selections — choose your portion size (price shown as small/large).</p>
-
-          <div style={{ display: 'grid', gap: 12, marginTop: 12 }}>
-            {BIRYANI_MENU.map(item => (
-              <div key={item.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 12, borderRadius: 8, background: 'transparent' }}>
-                <div>
-                  <div style={{ fontWeight: 700, fontSize: 16 }}>{item.name}</div>
-                </div>
-                <div style={{ fontWeight: 700 }}>{item.price}</div>
-              </div>
-            ))}
-          </div>
+          <p style={{ marginTop: 4, color: 'rgba(0,0,0,0.65)' }}>Redirecting to combined Menu page...</p>
 
           <div style={{ marginTop: 16, display: 'flex', gap: 12 }}>
             <Link to="/menu" className="link-plain">Main Course</Link>
@@ -42,4 +40,3 @@ export default function MenuBiryani() {
     </div>
   )
 }
-
