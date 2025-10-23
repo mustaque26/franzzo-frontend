@@ -5,6 +5,7 @@ import RollsSection from './RollsSection'
 import BreakfastSection from './BreakfastSection'
 import BeveragesSection from './BeveragesSection'
 import ThaliSection from './ThaliSection'
+import PartySection from './PartySection'
 
 const STARTERS_MENU = [
   { id: 1, name: 'Al Faham (Q/H/F)', price: '119/229/449' },
@@ -47,6 +48,7 @@ export default function Menu() {
   const [openBreakfast, setOpenBreakfast] = useState(false)
   const [openBeverages, setOpenBeverages] = useState(false)
   const [openThali, setOpenThali] = useState(false)
+  const [openParty, setOpenParty] = useState(false)
 
   // Read URL hash on mount to open a specific section (e.g., #starters)
   useEffect(() => {
@@ -58,6 +60,7 @@ export default function Menu() {
     else if (hash === 'breakfast') openOnly('breakfast')
     else if (hash === 'beverages') openOnly('beverages')
     else if (hash === 'thali') openOnly('thali')
+    else if (hash === 'party') openOnly('party')
   }, [])
 
   // update URL hash without adding history entries
@@ -67,7 +70,7 @@ export default function Menu() {
     try { window.history.replaceState(null, '', newUrl) } catch { window.location.hash = name || '' }
   }
 
-  function openOnly(section: 'starters' | 'biryani' | 'main' | 'rolls' | 'breakfast' | 'beverages' | 'thali' | null) {
+  function openOnly(section: 'starters' | 'biryani' | 'main' | 'rolls' | 'breakfast' | 'beverages' | 'thali' | 'party' | null) {
     setOpenStarters(section === 'starters')
     setOpenBiryani(section === 'biryani')
     setOpenMain(section === 'main')
@@ -75,17 +78,18 @@ export default function Menu() {
     setOpenBreakfast(section === 'breakfast')
     setOpenBeverages(section === 'beverages')
     setOpenThali(section === 'thali')
+    setOpenParty(section === 'party')
     updateHash(section)
   }
 
-  const SectionHeader = ({ title, open, onToggle }: { title: string; open: boolean; onToggle: () => void }) => {
+  const SectionHeader = ({ title, open, onToggle, gradient }: { title: string; open: boolean; onToggle: () => void; gradient?: string }) => {
     const id = `collapsible-${title.replace(/\s+/g, '-').toLowerCase()}`
     return (
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
         <div className="section-title" style={{
           flex: 1,
           textAlign: 'center',
-          background: 'linear-gradient(90deg, #6b8bff, #f26aa7)',
+          background: gradient || 'linear-gradient(90deg, #6b8bff, #f26aa7)',
           color: '#fff',
           fontWeight: 800,
           fontSize: 26,
@@ -207,6 +211,15 @@ export default function Menu() {
                     </div>
                   ))}
                 </div>
+              </div>
+            </div>
+
+            {/* Party section (new file) */}
+            <div style={{ marginTop: 18 }}>
+              <SectionHeader title="Party Menu" open={openParty} onToggle={() => openOnly(openParty ? null : 'party')} gradient={'linear-gradient(90deg,#00c6ff,#f7971e)'} />
+
+              <div id="collapsible-party" className={`collapsible ${openParty ? 'open' : ''}`}>
+                <PartySection />
               </div>
             </div>
 
