@@ -67,7 +67,7 @@ export default function Menu() {
     const id = `collapsible-${title.replace(/\s+/g, '-').toLowerCase()}`
     return (
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
-        <div style={{
+        <div className="section-title" style={{
           flex: 1,
           textAlign: 'center',
           background: 'linear-gradient(90deg, #6b8bff, #f26aa7)',
@@ -80,8 +80,7 @@ export default function Menu() {
 
         <button
           type="button"
-          onClick={() => onToggle()}
-          onPointerDown={(e) => { e.stopPropagation(); onToggle(); }}
+          onClick={(e) => { e.stopPropagation(); onToggle(); }}
           aria-expanded={open}
           aria-controls={id}
           aria-label={open ? `${title} collapse` : `${title} expand`}
@@ -108,8 +107,8 @@ export default function Menu() {
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
             aria-hidden
-            onClick={(e) => { e.stopPropagation(); onToggle() }}
-            onPointerDown={(e) => { e.stopPropagation(); onToggle() }}
+            /* click handled on parent button to avoid double toggles */
+
             style={{
               transform: open ? 'rotate(90deg)' : 'rotate(0deg)',
               transition: 'transform 260ms cubic-bezier(.2,.9,.2,1)',
@@ -144,9 +143,9 @@ export default function Menu() {
               <div id="collapsible-starters" className={`collapsible ${openStarters ? 'open' : ''}`}>
                 <div style={{ display: 'grid', gap: 12, marginTop: 6 }}>
                   {STARTERS_MENU.map(item => (
-                    <div key={item.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 6px' }}>
-                      <div style={{ fontWeight: 700, fontSize: 20 }}>{item.name}</div>
-                      <div style={{ fontWeight: 700, fontSize: 20 }}>{item.price}</div>
+                    <div key={item.id} className="menu-item">
+                      <div className="menu-item-name">{item.name}</div>
+                      <div className="menu-item-price">{item.price}</div>
                     </div>
                   ))}
                 </div>
@@ -160,9 +159,9 @@ export default function Menu() {
               <div id="collapsible-biryani" className={`collapsible ${openBiryani ? 'open' : ''}`}>
                 <div style={{ display: 'grid', gap: 12, marginTop: 6 }}>
                   {BIRYANI_MENU.map(item => (
-                    <div key={item.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 6px' }}>
-                      <div style={{ fontWeight: 700, fontSize: 20 }}>{item.name}</div>
-                      <div style={{ fontWeight: 700, fontSize: 20 }}>{item.price}</div>
+                    <div key={item.id} className="menu-item">
+                      <div className="menu-item-name">{item.name}</div>
+                      <div className="menu-item-price">{item.price}</div>
                     </div>
                   ))}
                 </div>
@@ -176,9 +175,9 @@ export default function Menu() {
               <div id="collapsible-main-course" className={`collapsible ${openMain ? 'open' : ''}`}>
                 <div style={{ display: 'grid', gap: 12, marginTop: 6 }}>
                   {MAIN_MENU.map(item => (
-                    <div key={item.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 6px' }}>
-                      <div style={{ fontWeight: 700, fontSize: 20 }}>{item.name}</div>
-                      <div style={{ fontWeight: 700, fontSize: 20 }}>{item.price}</div>
+                    <div key={item.id} className="menu-item">
+                      <div className="menu-item-name">{item.name}</div>
+                      <div className="menu-item-price">{item.price}</div>
                     </div>
                   ))}
                 </div>
