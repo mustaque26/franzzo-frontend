@@ -1,0 +1,402 @@
+/* Import a clean UI font for better headings */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+:root {
+  --bg-top: #071028;
+  --bg-bottom: #001029;
+  --accent: #06b6d4;
+  --logo-size: 120px;
+  --card-bg: rgba(255,255,255,0.02);
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background-color: var(--bg-bottom);
+  background-image:
+    linear-gradient(180deg, rgba(7,16,40,0.9), rgba(0,10,22,0.95)),
+    url('/assets/logo-pattern.svg');
+  background-repeat: repeat, repeat;
+  background-size: cover, var(--logo-size) var(--logo-size);
+  background-position: center, 0 0;
+  color: #e6f0ff;
+  /* Use Poppins for a cleaner dashboard look, fall back to system fonts */
+  font-family: 'Poppins', Inter, Roboto, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.4;
+}
+
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  /* stretch so header can align to the left corner while cards still center via max-width */
+  align-items: stretch;
+  gap: 16px;
+  /* reduce top padding so header sits near the top-left corner */
+  padding: 12px 16px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  max-width: 1100px;
+  justify-content: flex-start; /* left-align logo + title */
+  margin-left: 0; /* ensure no centering offset */
+  /* tighten vertical spacing */
+  padding: 4px 0;
+}
+
+/* Auth area (right side of header) */
+.header .auth {
+  margin-left: auto;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.auth .token-indicator { font-size: 13px; color: rgba(230,240,255,0.85); }
+.auth button { padding: 6px 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.06); background: rgba(255,255,255,0.02); color: #eafaf6; cursor: pointer; }
+
+.auth .login-panel { display: flex; gap: 8px; align-items: center; }
+.auth .token-input { padding: 6px 8px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.06); background: rgba(255,255,255,0.02); color: #eafaf6; min-width: 260px; }
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+}
+
+.brand-sub {
+  margin: 0;
+  font-size: 12px;
+  color: rgba(230,240,255,0.8);
+}
+
+.logo {
+  width: 56px;
+  height: 56px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  border-radius: 8px;
+  display: inline-block;
+  filter: drop-shadow(0 6px 18px rgba(2,6,23,0.6));
+}
+
+.logo--large {
+  width: 96px;
+  height: 96px;
+}
+
+/* Tweak logo spacing for header */
+.img-logo {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  display: inline-block;
+  margin-right: 12px;
+}
+
+.card {
+  width: 100%;
+  max-width: 1100px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border: 1px solid rgba(255,255,255,0.04);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(2,6,23,0.6);
+  color: inherit;
+  overflow: auto; /* Ensure card can scroll horizontally if table is wide */
+}
+
+/* Stronger table panel and typography for readability */
+.card table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(2,6,23,0.92); /* darker and more opaque panel for contrast */
+  color: #e6f6ef; /* light body text for readability */
+  box-shadow: 0 8px 30px rgba(2,6,23,0.6);
+  border-radius: 8px; /* may be visible if table is not full-width */
+  overflow: hidden;
+}
+.card th, .card td {
+  padding: 14px 16px;
+  border: 1px solid rgba(255,255,255,0.06);
+  vertical-align: middle;
+  font-size: 15px; /* slightly larger for readability */
+}
+
+/* STOCK: solid deep-green header and stronger hover */
+.card.stock table thead {
+  background: linear-gradient(90deg, #045f46 0%, #10b981 100%); /* stronger contrast gradient */
+  color: #ffffff;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  box-shadow: inset 0 -3px 0 rgba(0,0,0,0.35);
+}
+.card.stock table tbody tr:nth-child(odd) { background: rgba(255,255,255,0.01); }
+.card.stock table tbody tr:nth-child(even) { background: rgba(255,255,255,0.00); }
+.card.stock table tbody tr:hover { background: rgba(4,120,87,0.09); }
+.card.stock table td, .card.stock table th { border-color: rgba(16,185,129,0.10); color: #dfffee; }
+
+/* WASTE: solid deep-orange header and stronger hover */
+.card.waste table thead {
+  background: linear-gradient(90deg, #7a2b00 0%, #f97316 100%); /* strong orange gradient */
+  color: #ffffff;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  box-shadow: inset 0 -3px 0 rgba(0,0,0,0.35);
+}
+.card.waste table tbody tr:nth-child(odd) { background: rgba(255,255,255,0.01); }
+.card.waste table tbody tr:nth-child(even) { background: rgba(255,255,255,0.00); }
+.card.waste table tbody tr:hover { background: rgba(249,115,22,0.10); }
+.card.waste table td, .card.waste table th { border-color: rgba(249,115,22,0.10); color: #fff7ef; }
+
+/* Make header text slightly larger and emphasize */
+.card table thead th { font-size: 15px; text-transform: none; }
+
+/* Inputs/selects/buttons inside cards - increase contrast and padding */
+.card input, .card select, .card button {
+  background: rgba(255,255,255,0.02);
+  color: #eafaf6;
+  border: 1px solid rgba(255,255,255,0.06);
+  padding: 8px 10px;
+  border-radius: 8px;
+}
+.card button.btn { background: linear-gradient(90deg, #06b6d4, #3b82f6); color: white; border: none; }
+
+/* Make link-styled anchors match button styles inside cards */
+.card a.btn {
+  display: inline-block;
+  text-decoration: none;
+  background: linear-gradient(90deg, #06b6d4, #3b82f6);
+  color: white;
+  border: none;
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* Plain link variant: white and bold text (keeps anchor semantics but is highly visible) */
+.card a.link-plain {
+  display: block; /* keep visible as a block under form */
+  width: 100%;
+  text-align: center;
+  color: #ffffff;
+  font-weight: 700;
+  text-decoration: none;
+  padding: 10px 0; /* gives some tappable area while keeping link look */
+}
+.card a.link-plain:hover { text-decoration: underline; }
+
+/* Inline-action: align a small label and a link on the same baseline */
+.card .inline-action {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+/* Inline link variant: white, bold, inline (used for same-line label + link) */
+.card a.link-inline {
+  display: inline-block;
+  color: #ffffff;
+  font-weight: 700;
+  text-decoration: none;
+}
+.card a.link-inline:hover { text-decoration: underline; }
+
+/* Inline non-link label to match link style when needed */
+.card .inline-label {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+/* Full-width variant for prominent visibility */
+.card a.btn.full {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 10px 12px;
+  font-weight: 600;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+/* Secondary / outline variant for less-prominent links */
+.card a.btn.secondary {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.10);
+  color: #eafaf6;
+}
+
+.card a.btn:focus {
+  outline: 2px solid rgba(6,182,212,0.18);
+  outline-offset: 2px;
+}
+
+/* Login page specific styling (hero, card, buttons) */
+.login-hero {
+  text-align: center;
+  margin: 18px auto 8px;
+  color: #f7e1cb;
+}
+.login-hero .hero-logo {
+  width: 96px;
+  height: 96px;
+  display: block;
+  margin: 8px auto 12px;
+  object-fit: contain;
+  filter: drop-shadow(0 12px 28px rgba(0,0,0,0.6));
+}
+.login-hero .hero-title {
+  font-size: 38px;
+  line-height: 1.02;
+  margin: 6px 0 6px;
+  font-weight: 700;
+  color: #f6d4ad;
+  letter-spacing: -0.01em;
+}
+.login-hero .hero-sub {
+  margin: 0 0 16px;
+  font-size: 14px;
+  color: rgba(255,235,210,0.8);
+}
+
+/* Make the login card look more like the design: deeper, rounded, padded */
+.card.login {
+  background: linear-gradient(180deg, rgba(28,10,8,0.62), rgba(12,6,5,0.55));
+  border: 1px solid rgba(255,255,255,0.03);
+  padding: 22px;
+  border-radius: 16px;
+  box-shadow: 0 30px 60px rgba(1,2,3,0.65), inset 0 1px 0 rgba(255,255,255,0.02);
+}
+
+/* Inputs styling inside login card */
+.card.login input {
+  background: rgba(0,0,0,0.35);
+  border: 1px solid rgba(255,255,255,0.04);
+  color: #fff7ee;
+  padding: 12px 14px;
+  height: 48px;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+.card.login input::placeholder { color: rgba(255,255,255,0.5); }
+
+/* Password row: eye button styling */
+.card.login .field-row { display: flex; gap: 8px; align-items: center; }
+.card.login .field-row input { flex: 1 1 auto; min-width: 0; }
+.card.login .eye-toggle {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.04);
+  color: #fff7ee;
+  border-radius: 10px;
+  padding: 10px 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  height: 48px;
+}
+.card.login .eye-toggle:active { transform: translateY(1px); }
+
+/* Gold gradient sign-in button */
+.btn.gold {
+  background: linear-gradient(90deg, #b77a2a 0%, #f6c36f 50%, #e4a93b 100%);
+  color: #2a1400;
+  border: none;
+  box-shadow: 0 6px 18px rgba(180,120,40,0.22);
+}
+.btn.gold:hover { filter: brightness(1.03); }
+
+/* Outline / secondary button */
+.btn.outline {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.06);
+  color: #eafaf6;
+}
+
+/* Full width helper class */
+.btn.full { display: block; width: 100%; padding: 14px 16px; font-size: 18px; border-radius: 12px; }
+
+/* Muted helper text inside card */
+.card.login .muted { color: rgba(230,220,200,0.75); font-size: 13px; margin-top: 8px; line-height: 1.4 }
+
+/* NEW: form actions layout (buttons side-by-side with small gap) */
+.card.login .form-actions {
+  display: flex;
+  gap: 10px; /* small gap between buttons */
+  align-items: center;
+}
+.card.login .form-actions .btn {
+  flex: 1 1 0; /* share available space evenly */
+  min-width: 0; /* prevents overflow issues on small screens */
+}
+
+/* keep mobile stacking behavior already present (this reinforces it) */
+@media (max-width: 420px) {
+  .card.login .form-actions { flex-direction: column; gap: 10px; }
+  .card.login .form-actions .btn { width: 100%; }
+}
+
+/* Footer centered and spaced */
+.login-footer {
+  margin-top: 28px;
+  text-align: center;
+  color: rgba(255,230,210,0.6);
+  font-size: 13px;
+  padding-bottom: 18px;
+}
+
+/* Small responsive table tweaks */
+@media (max-width: 720px) {
+  .card table th, .card table td { padding: 10px 8px; font-size: 14px; }
+  .img-logo { width: 48px; height: 48px; margin-right: 8px; }
+  .login-hero .hero-logo { width: 80px; height: 80px; }
+  .login-hero .hero-title { font-size: 30px; }
+  .card.login { padding: 18px; border-radius: 14px; }
+  .card.login input { height: 44px; padding: 10px 12px; }
+  .btn.full { padding: 12px 14px; font-size: 16px; }
+}
+
+@media (max-width: 640px) {
+  .header { padding: 12px 0; gap: 10px; }
+  .logo { width: 40px; height: 40px; }
+  :root { --logo-size: 80px; }
+}
+
+@media (max-width: 420px) {
+  .login-hero { margin-top: 8px; }
+  .login-hero .hero-logo { width: 72px; height: 72px; }
+  .login-hero .hero-title { font-size: 24px; }
+  .login-hero .hero-sub { font-size: 13px; }
+  .card.login { width: 92vw !important; padding: 14px; }
+  .card.login input { height: 42px; }
+  .card.login .form-actions { flex-direction: column; gap: 10px; }
+  .card.login .form-actions .btn.full, .card.login .form-actions .btn.outline { width: 100%; }
+}
+
+/* Slightly reduce button padding on narrow screens so labels fit better */
+@media (max-width: 520px) {
+  .card button, .card input { padding: 7px 8px; }
+}
+
+/* Helper to easily show the logo via inline style:
+   <div class="logo" style="background-image: url('/assets/logo.svg')"></div>
+*/
