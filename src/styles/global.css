@@ -325,18 +325,49 @@ body {
 }
 .btn.gold:hover { filter: brightness(1.03); }
 
-/* Outline / secondary button */
-.btn.outline {
-  background: transparent;
-  border: 1px solid rgba(255,255,255,0.06);
-  color: #eafaf6;
+/* Primary / outline button styles and success/error panels */
+.btn.primary {
+  background: linear-gradient(90deg, #06b6d4, #3b82f6);
+  color: #ffffff;
+  border: none;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-weight: 700;
+  box-shadow: 0 8px 20px rgba(3,7,18,0.45);
 }
 
-/* Full width helper class */
-.btn.full { display: block; width: 100%; padding: 14px 16px; font-size: 18px; border-radius: 12px; }
+.btn.outline {
+  background: transparent;
+  color: #eafaf6;
+  border: 1px solid rgba(255,255,255,0.08);
+}
 
-/* Muted helper text inside card */
-.card.login .muted { color: rgba(230,220,200,0.75); font-size: 13px; margin-top: 8px; line-height: 1.4 }
+.form-success {
+  margin-top: 10px;
+  padding: 10px 12px;
+  background: rgba(23,163,74,0.12);
+  color: #b7f5c6;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.form-error {
+  margin-top: 10px;
+  padding: 10px 12px;
+  background: rgba(255,72,66,0.08);
+  color: #ffb4a2;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+/* Login button specific styles */
+.card.login .btn {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-weight: 700;
+  box-shadow: 0 8px 20px rgba(3,7,18,0.45);
+}
 
 /* NEW: form actions layout (buttons side-by-side with small gap) */
 .card.login .form-actions {
@@ -397,6 +428,115 @@ body {
   .card button, .card input { padding: 7px 8px; }
 }
 
-/* Helper to easily show the logo via inline style:
-   <div class="logo" style="background-image: url('/assets/logo.svg')"></div>
-*/
+/* Contact page specific styles */
+.contact-card {
+  padding: 22px;
+  background: linear-gradient(180deg, rgba(28,10,8,0.6), rgba(12,6,5,0.5));
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.04);
+}
+
+.contact-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  margin-bottom: 16px;
+}
+.contact-title { font-size: 28px; margin: 0 0 6px; color: #fff; }
+.contact-sub { margin: 0; color: rgba(230,240,255,0.8); }
+.contact-actions { text-align: right; }
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.contact-info h3, .contact-form h3 { margin-top: 0; margin-bottom: 12px; color: #ffffff; }
+.info-list { display: grid; gap: 10px; }
+.info-row { display: flex; gap: 12px; align-items: flex-start; }
+.info-label { color: var(--accent); min-width: 90px; font-weight: 700; }
+.info-value { color: #ffffff; font-weight: 700; }
+
+.field-label { display: block; font-size: 13px; color: rgba(230,240,255,0.85); margin-bottom: 8px; }
+.contact-input, .contact-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.06);
+  background: rgba(0,0,0,0.35);
+  color: #fff7ee;
+  outline: none;
+}
+.contact-textarea { min-height: 140px; resize: vertical; }
+.contact-input:focus, .contact-textarea:focus { box-shadow: 0 6px 18px rgba(2,6,23,0.32); border-color: rgba(6,182,212,0.3); }
+
+.form-actions { display: flex; gap: 10px; margin-top: 8px; }
+.form-error { margin-top: 8px; color: #ffb4a2; }
+.form-success { margin-top: 8px; color: #b7f5c6; }
+
+/* Polished tweaks for Contact visuals */
+.contact-card {
+  /* slightly brighter and softer to lift it from the background */
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 12px 30px rgba(2,6,23,0.55);
+}
+
+.contact-hero { padding-bottom: 14px; }
+.contact-title { font-size: 30px; letter-spacing: -0.02em; }
+
+/* make the Back to home link look like a subtle pill CTA */
+.contact-actions .link-plain {
+  display: inline-block;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.03);
+  color: #ffffff;
+  font-weight: 700;
+  text-decoration: none;
+  border: 1px solid rgba(255,255,255,0.04);
+}
+.contact-actions .link-plain:hover { background: rgba(255,255,255,0.06); }
+
+/* contact info values: make links prominent and consistent */
+.info-value, .info-value a { color: #ffffff; font-weight: 700; text-decoration: none; }
+.info-value a:hover { color: var(--accent); text-decoration: underline; }
+
+/* form control polish */
+.contact-input, .contact-textarea { font-size: 15px; }
+
+/* make primary button slightly larger and centered on small screens */
+.form-actions .btn.gold { padding: 12px 16px; font-weight: 700; }
+
+/* focus-visible for accessibility */
+.contact-input:focus-visible, .contact-textarea:focus-visible, .btn:focus-visible, .link-plain:focus-visible {
+  outline: 3px solid rgba(6,182,212,0.16);
+  outline-offset: 3px;
+}
+
+/* Additional polish for contact visuals */
+.contact-card { padding: 28px; }
+.info-row { gap: 14px; }
+.info-label { display: inline-flex; align-items: center; gap: 8px; }
+.info-label::before { content: "\2709\FE0F"; /* envelope emoji */ font-size: 14px; opacity: 0.95; }
+
+/* Slightly stronger CTA for Back to home */
+.contact-actions .link-plain { background: linear-gradient(90deg, rgba(6,182,212,0.12), rgba(59,130,246,0.08)); border: 1px solid rgba(6,182,212,0.14); }
+
+/* Tighter form layout on wide screens and comfortable spacing */
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.field-full { grid-column: 1 / -1; }
+@media (max-width: 720px) { .form-grid { grid-template-columns: 1fr; } }
+
+/* Smaller screens: stack columns */
+@media (max-width: 720px) {
+  .contact-grid { grid-template-columns: 1fr; }
+  .contact-hero { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .contact-actions { width: 100%; text-align: left; }
+}

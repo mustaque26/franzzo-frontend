@@ -4,6 +4,12 @@ import './styles/global.css'
 import App from './pages/App'
 import Login from './pages/Login'
 import Register from './pages/Register'
+import Menu from './pages/Menu'
+import Contact from './pages/Contact'
+import About from './pages/About'
+import Gallery from './pages/Gallery'
+import Reviews from './pages/Reviews'
+import Landing from './pages/Landing'
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { getAccessToken, getUserRole } from './services/api'
 
@@ -31,15 +37,15 @@ createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        {/* Landing: if already authenticated, redirect to role dashboard */}
+        {/* Landing: show public landing for unauthenticated users; if authenticated, redirect to role dashboard */}
         <Route
           path="/"
           element={
             getAccessToken() ? (
               <Navigate to={getUserRole() === 'admin' ? '/admin' : '/customer'} replace />
             ) : (
-              // When unauthenticated, redirect to the public customer login page
-              <Navigate to="/customer" replace />
+              // When unauthenticated, show the public Landing page with Menu/Contact/About/Gallery/Reviews
+              <Landing />
             )
           }
         />
@@ -52,6 +58,13 @@ createRoot(document.getElementById('root')!).render(
 
         {/* Public registration page for customers */}
         <Route path="/register" element={<Register />} />
+
+        {/* Public informational pages */}
+        <Route path="/menu" element={<Menu />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/gallery" element={<Gallery />} />
+        <Route path="/reviews" element={<Reviews />} />
 
         {/* Admin routes (protected) */}
         <Route
