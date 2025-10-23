@@ -6,6 +6,7 @@ import BreakfastSection from './BreakfastSection'
 import BeveragesSection from './BeveragesSection'
 import ThaliSection from './ThaliSection'
 import PartySection from './PartySection'
+import { SECTION_GRADIENTS } from '../constants/sectionGradients'
 
 const STARTERS_MENU = [
   { id: 1, name: 'Al Faham (Q/H/F)', price: '119/229/449' },
@@ -82,14 +83,15 @@ export default function Menu() {
     updateHash(section)
   }
 
-  const SectionHeader = ({ title, open, onToggle, gradient }: { title: string; open: boolean; onToggle: () => void; gradient?: string }) => {
+  const SectionHeader = ({ title, open, onToggle, gradientKey }: { title: string; open: boolean; onToggle: () => void; gradientKey?: string }) => {
     const id = `collapsible-${title.replace(/\s+/g, '-').toLowerCase()}`
+    const background = SECTION_GRADIENTS[gradientKey || 'default'] || SECTION_GRADIENTS.default
     return (
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
         <div className="section-title" style={{
           flex: 1,
           textAlign: 'center',
-          background: gradient || 'linear-gradient(90deg, #6b8bff, #f26aa7)',
+          background: background,
           color: '#fff',
           fontWeight: 800,
           fontSize: 26,
@@ -157,7 +159,7 @@ export default function Menu() {
 
             {/* Rolls section (moved to its own file) */}
             <div style={{ marginTop: 12 }}>
-              <SectionHeader title="Rolls" open={openRolls} onToggle={() => openOnly(openRolls ? null : 'rolls')} />
+              <SectionHeader title="Rolls" open={openRolls} onToggle={() => openOnly(openRolls ? null : 'rolls')} gradientKey={'rolls'} />
 
               <div id="collapsible-rolls" className={`collapsible ${openRolls ? 'open' : ''}`}>
                 <RollsSection />
@@ -166,7 +168,7 @@ export default function Menu() {
 
             {/* Breakfast section (moved to its own file) */}
             <div style={{ marginTop: 12 }}>
-              <SectionHeader title="Breakfast" open={openBreakfast} onToggle={() => openOnly(openBreakfast ? null : 'breakfast')} />
+              <SectionHeader title="Breakfast" open={openBreakfast} onToggle={() => openOnly(openBreakfast ? null : 'breakfast')} gradientKey={'breakfast'} />
 
               <div id="collapsible-breakfast" className={`collapsible ${openBreakfast ? 'open' : ''}`}>
                 <BreakfastSection />
@@ -175,7 +177,7 @@ export default function Menu() {
 
             {/* Thali section (new file) */}
             <div style={{ marginTop: 12 }}>
-              <SectionHeader title="Thali" open={openThali} onToggle={() => openOnly(openThali ? null : 'thali')} />
+              <SectionHeader title="Thali" open={openThali} onToggle={() => openOnly(openThali ? null : 'thali')} gradientKey={'thali'} />
 
               <div id="collapsible-thali" className={`collapsible ${openThali ? 'open' : ''}`}>
                 <ThaliSection />
@@ -184,7 +186,7 @@ export default function Menu() {
 
             {/* Starters section (top) */}
             <div style={{ marginTop: 12 }}>
-              <SectionHeader title="Starters" open={openStarters} onToggle={() => openOnly(openStarters ? null : 'starters')} />
+              <SectionHeader title="Starters" open={openStarters} onToggle={() => openOnly(openStarters ? null : 'starters')} gradientKey={'starters'} />
 
               <div id="collapsible-starters" className={`collapsible ${openStarters ? 'open' : ''}`}>
                 <div style={{ display: 'grid', gap: 12, marginTop: 6 }}>
@@ -200,7 +202,7 @@ export default function Menu() {
 
             {/* Biryani section (middle) */}
             <div style={{ marginTop: 18 }}>
-              <SectionHeader title="Biryani" open={openBiryani} onToggle={() => openOnly(openBiryani ? null : 'biryani')} />
+              <SectionHeader title="Biryani" open={openBiryani} onToggle={() => openOnly(openBiryani ? null : 'biryani')} gradientKey={'biryani'} />
 
               <div id="collapsible-biryani" className={`collapsible ${openBiryani ? 'open' : ''}`}>
                 <div style={{ display: 'grid', gap: 12, marginTop: 6 }}>
@@ -216,7 +218,7 @@ export default function Menu() {
 
             {/* Party section (new file) */}
             <div style={{ marginTop: 18 }}>
-              <SectionHeader title="Party Menu" open={openParty} onToggle={() => openOnly(openParty ? null : 'party')} gradient={'linear-gradient(90deg,#00c6ff,#f7971e)'} />
+              <SectionHeader title="Party Menu" open={openParty} onToggle={() => openOnly(openParty ? null : 'party')} gradientKey={'party'} />
 
               <div id="collapsible-party" className={`collapsible ${openParty ? 'open' : ''}`}>
                 <PartySection />
@@ -225,7 +227,7 @@ export default function Menu() {
 
             {/* Beverages section (new file) */}
             <div style={{ marginTop: 18 }}>
-              <SectionHeader title="Beverages" open={openBeverages} onToggle={() => openOnly(openBeverages ? null : 'beverages')} />
+              <SectionHeader title="Beverages" open={openBeverages} onToggle={() => openOnly(openBeverages ? null : 'beverages')} gradientKey={'beverages'} />
 
               <div id="collapsible-beverages" className={`collapsible ${openBeverages ? 'open' : ''}`}>
                 <BeveragesSection />
@@ -234,7 +236,7 @@ export default function Menu() {
 
             {/* Main Course section (bottom) */}
             <div style={{ marginTop: 18 }}>
-              <SectionHeader title="Main Course" open={openMain} onToggle={() => openOnly(openMain ? null : 'main')} />
+              <SectionHeader title="Main Course" open={openMain} onToggle={() => openOnly(openMain ? null : 'main')} gradientKey={'main'} />
 
               <div id="collapsible-main-course" className={`collapsible ${openMain ? 'open' : ''}`}>
                 <div style={{ display: 'grid', gap: 12, marginTop: 6 }}>
