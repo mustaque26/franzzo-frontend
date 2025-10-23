@@ -4,6 +4,7 @@ import Brand from '../components/Brand'
 import RollsSection from './RollsSection'
 import BreakfastSection from './BreakfastSection'
 import BeveragesSection from './BeveragesSection'
+import ThaliSection from './ThaliSection'
 
 const STARTERS_MENU = [
   { id: 1, name: 'Al Faham (Q/H/F)', price: '119/229/449' },
@@ -45,6 +46,7 @@ export default function Menu() {
   const [openRolls, setOpenRolls] = useState(false)
   const [openBreakfast, setOpenBreakfast] = useState(false)
   const [openBeverages, setOpenBeverages] = useState(false)
+  const [openThali, setOpenThali] = useState(false)
 
   // Read URL hash on mount to open a specific section (e.g., #starters)
   useEffect(() => {
@@ -55,6 +57,7 @@ export default function Menu() {
     else if (hash === 'rolls') openOnly('rolls')
     else if (hash === 'breakfast') openOnly('breakfast')
     else if (hash === 'beverages') openOnly('beverages')
+    else if (hash === 'thali') openOnly('thali')
   }, [])
 
   // update URL hash without adding history entries
@@ -64,13 +67,14 @@ export default function Menu() {
     try { window.history.replaceState(null, '', newUrl) } catch { window.location.hash = name || '' }
   }
 
-  function openOnly(section: 'starters' | 'biryani' | 'main' | 'rolls' | 'breakfast' | 'beverages' | null) {
+  function openOnly(section: 'starters' | 'biryani' | 'main' | 'rolls' | 'breakfast' | 'beverages' | 'thali' | null) {
     setOpenStarters(section === 'starters')
     setOpenBiryani(section === 'biryani')
     setOpenMain(section === 'main')
     setOpenRolls(section === 'rolls')
     setOpenBreakfast(section === 'breakfast')
     setOpenBeverages(section === 'beverages')
+    setOpenThali(section === 'thali')
     updateHash(section)
   }
 
@@ -162,6 +166,15 @@ export default function Menu() {
 
               <div id="collapsible-breakfast" className={`collapsible ${openBreakfast ? 'open' : ''}`}>
                 <BreakfastSection />
+              </div>
+            </div>
+
+            {/* Thali section (new file) */}
+            <div style={{ marginTop: 12 }}>
+              <SectionHeader title="Thali" open={openThali} onToggle={() => openOnly(openThali ? null : 'thali')} />
+
+              <div id="collapsible-thali" className={`collapsible ${openThali ? 'open' : ''}`}>
+                <ThaliSection />
               </div>
             </div>
 
