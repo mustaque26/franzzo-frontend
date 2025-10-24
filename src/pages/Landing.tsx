@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Brand from '../components/Brand'
 
@@ -14,6 +14,61 @@ export default function Landing() {
     boxShadow: '0 1px 0 rgba(255,255,255,0.02)',
     fontWeight: 600,
   }
+
+  // dynamically read slideshow images from the landingimages folder via a small manifest
+  const [images, setImages] = useState<string[]>([])
+  const [currentIndex, setCurrentIndex] = useState(0)
+
+  // Load manifest (public/assets/landingimages/index.json) that lists filenames
+  useEffect(() => {
+    let mounted = true
+    const manifestUrl = '/assets/landingimages/index.json'
+
+    fetch(manifestUrl)
+      .then(res => {
+        if (!res.ok) throw new Error('manifest not found')
+        return res.json()
+      })
+      .then((list: string[]) => {
+        if (!mounted) return
+        if (Array.isArray(list) && list.length > 0) {
+          setImages(list.map(name => `/assets/landingimages/${name}`))
+        } else {
+          // fallback to known names if manifest is empty
+          setImages(['/assets/landingimages/photo1.png', '/assets/landingimages/photo2.png', '/assets/landingimages/photo3.png'])
+        }
+      })
+      .catch(() => {
+        if (!mounted) return
+        // fallback if fetch fails
+        setImages(['/assets/landingimages/photo1.png', '/assets/landingimages/photo2.png', '/assets/landingimages/photo3.png'])
+      })
+
+    return () => { mounted = false }
+  }, [])
+
+  // Start slideshow only after images are loaded; preload them and set interval
+  useEffect(() => {
+    if (images.length === 0) return
+
+    const preloaded = images.map(src => {
+      const img = new Image()
+      img.src = src
+      return img
+    })
+
+    const id = setInterval(() => {
+      setCurrentIndex(i => (i + 1) % images.length)
+    }, 4000)
+
+    return () => {
+      clearInterval(id)
+      preloaded.length = 0
+    }
+  }, [images])
+
+  // Ensure we always have a valid src to render while the manifest/fetch settles
+  const currentImage = images.length ? images[currentIndex] : '/assets/landingimages/photo1.png'
 
   return (
     <div style={{ paddingTop: 24 }}>
@@ -50,9 +105,9 @@ export default function Landing() {
           <div style={{ position: 'relative', width: 'min(1100px, 96%)' }}>
             {/* Responsive image using picture; falls back to SVG placeholders already present in public/assets */}
             <picture>
-              <source media="(max-width: 640px)" srcSet="/assets/photo2.png" />
+              <source media="(max-width: 640px)" srcSet={currentImage} />
               <img
-                src="/assets/photo1.png"
+                src={currentImage}
                 alt="Franzzo hero placeholder"
                 style={{
                   width: '100%',

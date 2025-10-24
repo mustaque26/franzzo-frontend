@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom'
 import Brand from '../components/Brand'
 
 const SAMPLE_PHOTOS = [
-  { id: 1, src: '/assets/photo1.png', title: 'Signature Margherita', alt: 'Margherita pizza on a plate' },
-  { id: 2, src: '/assets/photo2.png', title: 'Spicy Arrabbiata', alt: 'Spicy arrabbiata pasta' },
-  { id: 3, src: '/assets/photo3.png', title: 'Chocolate Lava Cake', alt: 'Chocolate lava cake with molten center' },
+  { id: 1, src: '/assets/landingimages/photo1.png', title: 'Signature Margherita', alt: 'Margherita pizza on a plate' },
+  { id: 2, src: '/assets/landingimages/photo2.png', title: 'Spicy Arrabbiata', alt: 'Spicy arrabbiata pasta' },
+  { id: 3, src: '/assets/landingimages/photo3.png', title: 'Chocolate Lava Cake', alt: 'Chocolate lava cake with molten center' },
 ]
 
 export default function Gallery() {

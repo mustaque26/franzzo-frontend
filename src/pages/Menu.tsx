@@ -41,6 +41,29 @@ const MAIN_MENU = [
   { id: 9, name: 'Dal Tadka', price: '120' },
 ]
 
+// Add a small Sunday Special menu (matches the visual example)
+const SUNDAY_MENU = [
+  { id: 1, name: 'Ch. Keema', price: '149' },
+  { id: 2, name: 'Mutton Keema', price: '200' },
+  { id: 3, name: 'Mutton Korma (4/6)', price: '250/350' },
+]
+
+// Add a small Friday Special menu (matches the visual example)
+const FRIDAY_MENU = [
+  { id: 1, name: 'Ch. Dalcha', price: '149' },
+  { id: 2, name: 'Mutton Dalcha', price: '249' },
+]
+
+// Add a Platters menu (single platter shown in the screenshot)
+const PLATTERS_MENU = [
+  { id: 1, name: 'Platters (2 tikka, 2 tangdi, 2 wings, Al faham Qtr, Biryani Qtr)', price: '399' },
+]
+
+// Add a small Saturday Special menu
+const SATURDAY_MENU = [
+  { id: 1, name: 'Mutton Korma (4/6)', price: '250/350' },
+]
+
 export default function Menu() {
   const [openStarters, setOpenStarters] = useState(false)
   const [openBiryani, setOpenBiryani] = useState(true)
@@ -50,6 +73,14 @@ export default function Menu() {
   const [openBeverages, setOpenBeverages] = useState(false)
   const [openThali, setOpenThali] = useState(false)
   const [openParty, setOpenParty] = useState(false)
+  // state for the Sunday Special collapsible
+  const [openSunday, setOpenSunday] = useState(false)
+  // state for the Friday Special collapsible
+  const [openFriday, setOpenFriday] = useState(false)
+  // state for the Platters collapsible
+  const [openPlatters, setOpenPlatters] = useState(false)
+  // state for the Saturday Special collapsible
+  const [openSaturday, setOpenSaturday] = useState(false)
 
   // Read URL hash on mount to open a specific section (e.g., #starters)
   useEffect(() => {
@@ -62,6 +93,10 @@ export default function Menu() {
     else if (hash === 'beverages') openOnly('beverages')
     else if (hash === 'thali') openOnly('thali')
     else if (hash === 'party') openOnly('party')
+    else if (hash === 'sunday') openOnly('sunday')
+    else if (hash === 'friday') openOnly('friday')
+    else if (hash === 'platters') openOnly('platters')
+    else if (hash === 'saturday') openOnly('saturday')
   }, [])
 
   // update URL hash without adding history entries
@@ -71,7 +106,7 @@ export default function Menu() {
     try { window.history.replaceState(null, '', newUrl) } catch { window.location.hash = name || '' }
   }
 
-  function openOnly(section: 'starters' | 'biryani' | 'main' | 'rolls' | 'breakfast' | 'beverages' | 'thali' | 'party' | null) {
+  function openOnly(section: 'starters' | 'biryani' | 'main' | 'rolls' | 'breakfast' | 'beverages' | 'thali' | 'party' | 'sunday' | 'friday' | 'platters' | 'saturday' | null) {
     setOpenStarters(section === 'starters')
     setOpenBiryani(section === 'biryani')
     setOpenMain(section === 'main')
@@ -80,6 +115,10 @@ export default function Menu() {
     setOpenBeverages(section === 'beverages')
     setOpenThali(section === 'thali')
     setOpenParty(section === 'party')
+    setOpenSunday(section === 'sunday')
+    setOpenFriday(section === 'friday')
+    setOpenPlatters(section === 'platters')
+    setOpenSaturday(section === 'saturday')
     updateHash(section)
   }
 
@@ -156,6 +195,70 @@ export default function Menu() {
           <div style={{ position: 'relative', zIndex: 2, padding: 24 }}>
             <h1 style={{ marginTop: 0 }}>Menu</h1>
             <p style={{ marginTop: 4, color: 'rgba(255,255,255,0.9)' }}>Click the arrow to expand or collapse a category. The open section is preserved in the URL hash.</p>
+
+            {/* Friday Special section (uses fridaySpecial gradient) */}
+            <div style={{ marginTop: 12 }}>
+              <SectionHeader title="Friday Special" open={openFriday} onToggle={() => openOnly(openFriday ? null : 'friday')} gradientKey={'fridaySpecial'} />
+
+              <div id="collapsible-friday-special" className={`collapsible ${openFriday ? 'open' : ''}`}>
+                <div style={{ display: 'grid', gap: 12, marginTop: 6 }}>
+                  {FRIDAY_MENU.map(item => (
+                    <div key={item.id} className="menu-item">
+                      <div className="menu-item-name">{item.name}</div>
+                      <div className="menu-item-price">{item.price}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Sunday Special section (uses sundaySpecial gradient) */}
+            <div style={{ marginTop: 12 }}>
+              <SectionHeader title="Sunday Special" open={openSunday} onToggle={() => openOnly(openSunday ? null : 'sunday')} gradientKey={'sundaySpecial'} />
+
+              <div id="collapsible-sunday-special" className={`collapsible ${openSunday ? 'open' : ''}`}>
+                <div style={{ display: 'grid', gap: 12, marginTop: 6 }}>
+                  {SUNDAY_MENU.map(item => (
+                    <div key={item.id} className="menu-item">
+                      <div className="menu-item-name">{item.name}</div>
+                      <div className="menu-item-price">{item.price}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Saturday Special section (uses saturdaySpecial gradient) */}
+            <div style={{ marginTop: 12 }}>
+              <SectionHeader title="Saturday Special" open={openSaturday} onToggle={() => openOnly(openSaturday ? null : 'saturday')} gradientKey={'saturdaySpecial'} />
+
+              <div id="collapsible-saturday-special" className={`collapsible ${openSaturday ? 'open' : ''}`}>
+                <div style={{ display: 'grid', gap: 12, marginTop: 6 }}>
+                  {SATURDAY_MENU.map(item => (
+                    <div key={item.id} className="menu-item">
+                      <div className="menu-item-name">{item.name}</div>
+                      <div className="menu-item-price">{item.price}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Platters section (uses platters gradient) */}
+            <div style={{ marginTop: 12 }}>
+              <SectionHeader title="Platters" open={openPlatters} onToggle={() => openOnly(openPlatters ? null : 'platters')} gradientKey={'platters'} />
+
+              <div id="collapsible-platters" className={`collapsible ${openPlatters ? 'open' : ''}`}>
+                <div style={{ display: 'grid', gap: 12, marginTop: 6 }}>
+                  {PLATTERS_MENU.map(item => (
+                    <div key={item.id} className="menu-item">
+                      <div className="menu-item-name">{item.name}</div>
+                      <div className="menu-item-price">{item.price}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
 
             {/* Rolls section (moved to its own file) */}
             <div style={{ marginTop: 12 }}>

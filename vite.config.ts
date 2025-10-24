@@ -5,6 +5,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 5173,
+    allowedHosts: ['localhost', 'ferroelectrically-nonsegmented-tandra.ngrok-free.dev'],
     // Proxy API calls to the backend during development to avoid CORS issues
     proxy: {
       // Proxy any request starting with /api to the backend server
